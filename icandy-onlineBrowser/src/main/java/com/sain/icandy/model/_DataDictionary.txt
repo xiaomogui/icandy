@@ -1,0 +1,85 @@
+Table: t_hgaccount
+-------------+-------------+------+-----+---------+---------
+ Field       | Type        | Null | Key | Default | Remarks 
+-------------+-------------+------+-----+---------+---------
+ id          | INT(10)     | NO   | PRI |         |         
+ hg_username | VARCHAR(64) | NO   |     |         |         
+ hg_password | VARCHAR(64) | NO   |     |         |         
+ status      | VARCHAR(3)  | YES  |     | 1       | 状态 1 － 可用， 2 － 不可用
+-------------+-------------+------+-----+---------+---------
+
+Table: t_hgurl
+--------+--------------+------+-----+---------+---------
+ Field  | Type         | Null | Key | Default | Remarks 
+--------+--------------+------+-----+---------+---------
+ id     | INT(10)      | NO   | PRI |         |         
+ hg_url | VARCHAR(128) | NO   |     |         |         
+ status | VARCHAR(3)   | YES  |     | 1       | 状态： 1 － 可用， 2 － 不可用
+--------+--------------+------+-----+---------+---------
+
+Table: t_host
+--------+-------------+------+-----+---------+---------
+ Field  | Type        | Null | Key | Default | Remarks 
+--------+-------------+------+-----+---------+---------
+ id     | INT(10)     | NO   | PRI |         |         
+ host   | VARCHAR(50) | NO   |     |         | ip加端口，如：127.0.0.1:8080
+ status | INT(10)     | NO   |     | 1       | 状态，1=可用，2=不可用
+--------+-------------+------+-----+---------+---------
+
+Table: t_send_result
+------------------+--------------+------+-----+---------+---------
+ Field            | Type         | Null | Key | Default | Remarks 
+------------------+--------------+------+-----+---------+---------
+ id               | INT(10)      | NO   | PRI |         |         
+ hostId           | INT(10)      | NO   |     |         | t_host的id
+ host             | VARCHAR(50)  | NO   |     |         | t_host的host
+ sports_events_id | INT(10)      | NO   |     |         | t_lottery的id
+ status           | INT(10)      | NO   |     | 1       | 状态，1=成功，2=不成功
+ result           | VARCHAR(200) | YES  |     |         | 发送结果    
+ createTime       | DATETIME(19) | NO   |     |         | 添加时间    
+ failedNum        | INT(10)      | NO   |     | 0       | 发送失败次数，第一次失败后5秒再发送一次，以后每次多加10秒，如果失败次数超过5次，就不再发送
+------------------+--------------+------+-----+---------+---------
+
+Table: t_sports_events
+---------------------------+--------------+------+-----+---------+---------
+ Field                     | Type         | Null | Key | Default | Remarks 
+---------------------------+--------------+------+-----+---------+---------
+ id                        | BIGINT(19)   | NO   | PRI |         |         
+ gid                       | VARCHAR(10)  | YES  |     |         |         
+ league                    | VARCHAR(500) | YES  |     |         |         
+ league_tw                 | VARCHAR(100) | YES  |     |         |         
+ league_en                 | VARCHAR(100) | YES  |     |         |         
+ gnum_h                    | VARCHAR(10)  | YES  |     |         |         
+ gnum_c                    | VARCHAR(10)  | YES  |     |         |         
+ team_h                    | VARCHAR(100) | YES  |     |         |         
+ team_h_tw                 | VARCHAR(100) | YES  |     |         |         
+ team_h_en                 | VARCHAR(100) | YES  |     |         |         
+ team_c                    | VARCHAR(100) | YES  |     |         |         
+ team_c_tw                 | VARCHAR(100) | YES  |     |         |         
+ team_c_en                 | VARCHAR(100) | YES  |     |         |         
+ hgid                      | VARCHAR(100) | YES  |     |         |         
+ play                      | VARCHAR(100) | YES  |     |         |         
+ runTime                   | VARCHAR(255) | YES  |     |         |         
+ beginTime                 | DATETIME(19) | YES  |     |         |         
+ status                    | CHAR(1)      | YES  |     |         |         
+ payTime                   | DATETIME(19) | YES  |     |         |         
+ ballcode                  | VARCHAR(8)   | YES  |     |         |         
+ score_h                   | VARCHAR(6)   | YES  |     |         | 滚球－主场比分 
+ score_c                   | VARCHAR(6)   | YES  |     |         | 滚球－客场比分 
+ redcard_h                 | VARCHAR(6)   | YES  |     |         | 滚球－主场红牌数
+ redcard_c                 | VARCHAR(6)   | YES  |     |         | 滚球－客场红牌数
+ lastestscore_h            | VARCHAR(6)   | YES  |     |         | 滚球－主场是否最后进球
+ lastestscore_c            | VARCHAR(6)   | YES  |     |         | 滚球－客场是否最后进球
+ score_redcard_update_time | DATETIME(19) | YES  |     |         | 比分和红牌更新时间
+---------------------------+--------------+------+-----+---------+---------
+
+Table: t_user
+----------+-------------+------+-----+---------+---------
+ Field    | Type        | Null | Key | Default | Remarks 
+----------+-------------+------+-----+---------+---------
+ id       | INT(10)     | NO   | PRI |         |         
+ username | VARCHAR(50) | NO   |     |         | 用户名     
+ password | VARCHAR(50) | NO   |     |         | 密码      
+ salt     | VARCHAR(10) | NO   |     |         | 密码的盐    
+----------+-------------+------+-----+---------+---------
+

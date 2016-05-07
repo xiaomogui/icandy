@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>[%d{yyyyMMdd HH:mm:ss.SSS}]-[%thread] %-5level %logger.%method[%line] - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+	<appender name="accessfile"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>/var/logs/gcSpide.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>/var/logs/gcSpide.%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+		</rollingPolicy>
+		<encoder>
+			<pattern>[%d{yyyyMMdd HH:mm:ss.SSS}]-[%thread] %-5level %logger.%method[%line] - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+	<logger name="org.eclipse.jetty" level="error" additivity="false">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="accessfile" />
+	</logger>
+	<logger name="ch.qos.logback" level="error" additivity="false">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="accessfile" />
+	</logger>
+	<logger name="com.jfinal.log" level="error" additivity="false">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="accessfile" />
+	</logger>
+	<logger name="com.gc.spider" level="info" additivity="false">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="accessfile" />
+	</logger>
+	<root level="info">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="accessfile" />
+	</root>
+</configuration>
+
