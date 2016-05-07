@@ -1,4 +1,10 @@
+.project
+.classpath
 *.class
+
+# 文件夹
+target
+.settings
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
