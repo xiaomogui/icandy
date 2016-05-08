@@ -11,7 +11,7 @@ import com.sain.icandy.web.controller.UserController;
 
 public class ControllerRoute extends Routes {
 	public void config() {
-		add("/", IndexController.class, "sys");
+		add("/", IndexController.class, "front");
 		add("/user", UserController.class, "sys/user");
 		add("/host", HostController.class, "sys/host");
 		add("/sendResult", SendResultController.class, "sys/sendResult");
