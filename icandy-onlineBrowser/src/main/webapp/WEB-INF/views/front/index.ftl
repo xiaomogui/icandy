@@ -1281,9 +1281,9 @@ License: You must have a valid license purchased only from themeforest(the above
 	<!-- END SIDEBAR -->
 	<!-- BEGIN CONTENT -->
 	<div class="page-content-wrapper">
-		<div class="page-content" style="padding: 0px;">
+		<div class="page-content">
 			<!-- <iframe style="width: 100%; height: 100%;"></iframe> -->
-			<iframe id="obIframe" src="" style="margin: 0px; padding: 0px; min-height:884px; width: 100%; height: 100%;" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe>
+			<iframe id="obIframe" src="" style="min-height:884px; width: 100%;" frameborder="no" border="0" scrolling="no"></iframe>
 		</div>
 	</div>
 	<!-- END CONTENT -->
@@ -1339,7 +1339,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		// Index.initChat();
 		// Index.initMiniCharts();
 		// Tasks.initDashboardWidget();
-		var $accessUrlInput = $("#accessUrlInput"), $gotoAccessBtn = $("#gotoAccessBtn"), $obIframe = $("#obIframe");;
+		var $accessUrlInput = $("#accessUrlInput"), $gotoAccessBtn = $("#gotoAccessBtn"), $obIframe = $("#obIframe");
 		var refreshUrl = function (){
 			var accessUrl = $accessUrlInput.val();
 			if(accessUrl){
@@ -1351,10 +1351,10 @@ License: You must have a valid license purchased only from themeforest(the above
 			}
 		}
 		$accessUrlInput.on("keyup", function(){  
-		    var keycode = (event.keyCode ? event.keyCode : event.which);
-		    if(keycode == '13'){
-		    	$gotoAccessBtn.trigger("click");
-		    }
+			var keycode = (event.keyCode ? event.keyCode : event.which);
+			if(keycode == '13'){
+				$gotoAccessBtn.trigger("click");
+			}
 		});
 		$gotoAccessBtn.on("click", function(){
 			refreshUrl();

@@ -800,6 +800,7 @@ var Metronic = function() {
             return {
                 width: e[a + 'Width'],
                 height: e[a + 'Height']
+                // height: window.screen.availHeight
             };
         },
 
