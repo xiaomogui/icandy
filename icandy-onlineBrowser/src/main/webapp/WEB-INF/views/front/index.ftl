@@ -1327,6 +1327,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <script>
 	jQuery(document).ready(function() {
 		Metronic.init(); // init metronic core componets
+		Metronic.setAssetsPath("${ctx!}/assets/");
 		Layout.init(); // init layout
 		QuickSidebar.init(); // init quick sidebar
 		Demo.init(); // init demo features 
