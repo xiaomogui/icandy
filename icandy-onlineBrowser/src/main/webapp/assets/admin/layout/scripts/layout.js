@@ -12,6 +12,7 @@ var Layout = function () {
 
     // Set proper height for sidebar and content. The content and sidebar height must be synced always.
     var handleSidebarAndContentHeight = function () {
+        /*
         var content = $('.page-content');
         var sidebar = $('.page-sidebar');
         var body = $('body');
@@ -32,6 +33,41 @@ var Layout = function () {
                 var headerHeight = $('.page-header').outerHeight();
                 var footerHeight = $('.page-footer').outerHeight();
 
+                if (Metronic.getViewPort().width < 992) {
+                    height = Metronic.getViewPort().height - headerHeight - footerHeight;
+                } else {
+                    height = sidebar.height() + 20;
+                }
+
+                if ((height + headerHeight + footerHeight) <= Metronic.getViewPort().height) {
+                    height = Metronic.getViewPort().height - headerHeight - footerHeight;
+                }
+            }
+            content.attr('style', 'min-height:' + height + 'px');
+        }
+        */
+
+        var content = $('.page-content');
+        var sidebar = $('.page-sidebar');
+        var body = $('body');
+        var height;
+
+        var headerHeight = $('.page-header').outerHeight();
+        // var footerHeight = $('.page-footer').outerHeight();
+        var footerHeight = 5;
+
+        if (body.hasClass("page-footer-fixed") === true && body.hasClass("page-sidebar-fixed") === false) {
+            var available_height = Metronic.getViewPort().height - footerHeight - headerHeight;
+            if (content.height() < available_height) {
+                content.attr('style', 'min-height:' + available_height + 'px');
+            }
+        } else {
+            if (body.hasClass('page-sidebar-fixed')) {
+                height = _calculateFixedSidebarViewportHeight();
+                if (body.hasClass('page-footer-fixed') === false) {
+                    height = height - footerHeight;
+                }
+            } else {
                 if (Metronic.getViewPort().width < 992) {
                     height = Metronic.getViewPort().height - headerHeight - footerHeight;
                 } else {

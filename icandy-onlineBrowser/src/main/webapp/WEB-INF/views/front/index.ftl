@@ -858,6 +858,7 @@ License: You must have a valid license purchased only from themeforest(the above
 					</a>
 				</li>
 				<!-- END ANGULARJS LINK -->
+				<!-- 
 				<li class="heading">
 					<h3 class="uppercase">Features</h3>
 				</li>
@@ -1274,6 +1275,7 @@ License: You must have a valid license purchased only from themeforest(the above
 						</li>
 					</ul>
 				</li>
+				 -->
 			</ul>
 			<!-- END SIDEBAR MENU -->
 		</div>
@@ -1283,14 +1285,14 @@ License: You must have a valid license purchased only from themeforest(the above
 	<div class="page-content-wrapper">
 		<div class="page-content">
 			<!-- <iframe style="width: 100%; height: 100%;"></iframe> -->
-			<iframe id="obIframe" src="" style="min-height:884px; width: 100%;" frameborder="no" border="0" scrolling="no"></iframe>
+			<iframe id="obIframe" src="" style="min-height: 360px; width: 100%;" frameborder="no" border="0" scrolling="auto"></iframe>
 		</div>
 	</div>
 	<!-- END CONTENT -->
 </div>
 <!-- END CONTAINER -->
 <!-- BEGIN FOOTER -->
-<div class="page-footer">
+<div class="page-footer" style="display: none;">
 	<div class="page-footer-inner">
 		 2014 &copy; Metronic by keenthemes.
 	</div>
@@ -1339,7 +1341,8 @@ License: You must have a valid license purchased only from themeforest(the above
 		// Index.initChat();
 		// Index.initMiniCharts();
 		// Tasks.initDashboardWidget();
-		var $accessUrlInput = $("#accessUrlInput"), $gotoAccessBtn = $("#gotoAccessBtn"), $obIframe = $("#obIframe");
+		var $accessUrlInput = $("#accessUrlInput"), $gotoAccessBtn = $("#gotoAccessBtn"), $obIframe = $("#obIframe"), $pagecontent = $(".page-content");
+		$obIframe.css("min-height", $pagecontent.css("min-height"));
 		var refreshUrl = function (){
 			var accessUrl = $accessUrlInput.val();
 			if(accessUrl){
