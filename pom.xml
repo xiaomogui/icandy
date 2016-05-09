@@ -8,6 +8,7 @@
 
 	<modules>
 		<module>icandy-onlineBrowser</module>
+		<module>icandy-httpclient</module>
 	</modules>
 
 	<properties>
