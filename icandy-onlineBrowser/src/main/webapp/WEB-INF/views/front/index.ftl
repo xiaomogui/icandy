@@ -72,12 +72,32 @@ License: You must have a valid license purchased only from themeforest(the above
 		<a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
 		</a>
 		<!-- END RESPONSIVE MENU TOGGLER -->
-		<div style="margin: 7px 0px 0px 36px; float: left; display: block; width: 50%;">
-			<div class="input-group input-group-sm">
-				<span class="input-group-addon">地址</span>
-				<input id="accessUrlInput" type="text" class="form-control" placeholder="URL" value="http://baidu.com">
-				<span id="gotoAccessBtn" class="input-group-addon">前往</span>
-			</div>
+		<div class="top-address-bar">
+			<ul>
+				<li>
+					<span class="input-group input-group-sm" style="width: 300px;">
+						<span class="input-group-addon">地址:</span>
+						<input id="accessUrlInput" type="text" class="form-control" placeholder="URL" value="http://baidu.com">
+					</span>
+				</li>
+				<li>
+					<div class="btn-group btn-group-sm">
+							<button class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+								访问 <i class="fa fa-angle-down"></i>
+							</button>
+							<ul class="dropdown-menu" role="menu" aria-labelledby="">
+								<li>
+									<a href="#"> 访问 </a>
+								</li>
+								<li>
+									<a href="#"> 搜索 </a>
+								</li>
+							</ul>
+						<button id="gotoAccessBtn" class="btn btn-default"><!-- 前往 --> <i class="fa fa-search"></i></button>
+						<button id="" class="btn btn-default"><!-- 收藏 fa-star --><i class="fa fa-star-o"></i></button>
+					</div>
+				</li>
+			</ul>
 		</div>
 		<!-- BEGIN TOP NAVIGATION MENU -->
 		<div class="top-menu">
@@ -422,8 +442,8 @@ License: You must have a valid license purchased only from themeforest(the above
 					</ul>
 				</li>
 				<!-- END USER LOGIN DROPDOWN -->
-				<li class="dropdown dropdown-quick-sidebar-toggler" style="width: 32px; padding-top: 24px;">
-					<div class="theme-panel hidden-xs hidden-sm">
+				<li class="dropdown dropdown-system-setting">
+					<div class="theme-panel hidden-xss"><!-- <div class="theme-panel hidden-xs hidden-sm"> -->
 						<div class="toggler dropdown-toggle" style="background: center; padding: 0px;"><i class="icon-settings"></i></div>
 						<div class="toggler-close"></div>
 						<div class="theme-options">
