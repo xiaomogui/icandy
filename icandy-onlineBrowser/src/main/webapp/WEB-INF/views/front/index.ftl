@@ -82,15 +82,15 @@ License: You must have a valid license purchased only from themeforest(the above
 				</li>
 				<li>
 					<div class="btn-group btn-group-sm">
-							<button class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-								访问 <i class="fa fa-angle-down"></i>
+							<button id="actionType" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true" data-value="1">
+								<span>访问</span> <i class="fa fa-angle-down"></i>
 							</button>
-							<ul class="dropdown-menu" role="menu" aria-labelledby="">
-								<li>
-									<a href="#"> 访问 </a>
+							<ul id="actionTypeUl" class="dropdown-menu" role="menu" aria-labelledby="" style="min-width: 70px;">
+								<li data-value="1">
+									<a href="javascript: void(0);">访问</a>
 								</li>
-								<li>
-									<a href="#"> 搜索 </a>
+								<li data-value="2">
+									<a href="javascript: void(0);">搜索</a>
 								</li>
 							</ul>
 						<button id="gotoAccessBtn" class="btn btn-default"><!-- 前往 --> <i class="fa fa-search"></i></button>
@@ -1383,6 +1383,21 @@ License: You must have a valid license purchased only from themeforest(the above
 			refreshUrl();
 		});
 		refreshUrl();
+
+		var $actionType = $("#actionType"), $actionTypeUlLi = $("#actionTypeUl > li");
+		$actionType.on("change", function(){
+			refreshUrl();
+		});
+		$actionTypeUlLi.on("click", function(){
+			var $this = $(this);
+			var tValule = $this.data("value");
+			var actionTypeValue = $actionType.data("value");
+			if(!(tValule == actionTypeValue)){
+				$actionType.data("value", tValule);
+				$actionType.find("span").text($this.find("a").text());
+				$actionType.trigger("change");
+			}
+		});
 	});
 </script>
 <!-- END JAVASCRIPTS -->
