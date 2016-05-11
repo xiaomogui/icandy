@@ -39,6 +39,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <link href="${ctx!}/assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
 <link href="${ctx!}/assets/admin/layout/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color"/>
 <link href="${ctx!}/assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
+<link href="${ctx!}/assets/global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" type="text/css" />
 <!-- END THEME STYLES -->
 <link rel="shortcut icon" href="favicon.ico"/>
 </head>
@@ -76,14 +77,15 @@ License: You must have a valid license purchased only from themeforest(the above
 			<ul>
 				<li>
 					<span class="input-group input-group-sm address-input">
-						<span class="input-group-addon">地址:</span>
-						<input id="accessUrlInput" type="text" class="form-control" placeholder="URL" value="http://baidu.com">
+						<span class="input-group-addon"><!-- 地址 -->:</span>
+						<input id="accessUrlInput" type="text" class="form-control" placeholder="content" value="">
 					</span>
 				</li>
 				<li>
 					<div class="btn-group btn-group-sm">
-							<button id="actionType" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true" data-value="1">
-								<span>直接访问</span> <i class="fa fa-angle-down"></i>
+							<button id="gotoAccessBtn" class="btn btn-default"><span>初始化..</span> </button>
+							<button id="actionType" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true" data-value="0">
+								<i class="fa fa-angle-down"></i>
 							</button>
 							<ul id="actionTypeUl" class="dropdown-menu" role="menu" aria-labelledby="" style="min-width: 70px;">
 								<li data-value="1">
@@ -96,7 +98,7 @@ License: You must have a valid license purchased only from themeforest(the above
 									<a href="javascript: void(0);">搜索</a>
 								</li>
 							</ul>
-						<button id="gotoAccessBtn" class="btn btn-default"><!-- 前往 --> <i class="fa fa-search"></i></button>
+						<!-- <button id="gotoAccessBtn" class="btn btn-default"><i class="fa fa-search"></i></button> --> <!-- 前往 --> 
 						<button id="" class="btn btn-default"><!-- 收藏 fa-star --><i class="fa fa-star-o"></i></button>
 					</div>
 				</li>
@@ -1350,6 +1352,23 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- <script src="${ctx!}/assets/admin/pages/scripts/tasks.js" type="text/javascript"></script> -->
 <!-- END PAGE LEVEL SCRIPTS -->
 <script>
+	top.conf = {
+		cookie_key: {
+			ob_cok_action_type: "ob_cok_action_type"
+		},
+	};
+
+	function iAlert (content) {
+		$('<div title="提示"><p>' + content + '</p></div>').dialog({
+			resizable: false,
+			modal: true,
+			buttons: {
+				"确定": function() {
+					$(this).dialog( "close" );
+				}
+			}
+		});
+	}
 	jQuery(document).ready(function() {
 		Metronic.init(); // init metronic core componets
 		Metronic.setAssetsPath("${ctx!}/assets/");
@@ -1364,8 +1383,46 @@ License: You must have a valid license purchased only from themeforest(the above
 		// Index.initChat();
 		// Index.initMiniCharts();
 		// Tasks.initDashboardWidget();
+
 		var $accessUrlInput = $("#accessUrlInput"), $gotoAccessBtn = $("#gotoAccessBtn"), $obIframe = $("#obIframe"), $pagecontent = $(".page-content");
+
+		var $actionType = $("#actionType"), $actionTypeUlLi = $("#actionTypeUl > li");
+
+		$actionType.on("change", function(){
+			toOperation();
+		});
+		$actionTypeUlLi.on("click", function(){
+			var $this = $(this);
+			var tValule = $this.data("value");
+			var actionTypeValue = $actionType.data("value");
+			if(!(tValule == actionTypeValue)){
+				$actionType.data("value", tValule);
+				$gotoAccessBtn.find("span").text($this.find("a").text());
+				$actionType.trigger("change");
+				$.cookie(top.conf.cookie_key.ob_cok_action_type, tValule);
+			}
+		});
+
 		$obIframe.css("min-height", $pagecontent.css("min-height"));
+
+		var toOperation = function(){
+			var actionTypeValue = $actionType.data("value");
+			var inputContent = $accessUrlInput.val();
+
+			if(!inputContent){
+				// iAlert("内容不能为空");
+				return false;
+			}
+
+			if(1 == actionTypeValue){
+				refreshUrl();
+			} else if(2 == actionTypeValue) {
+				toAccessInIcandy();
+			} else if(3 == actionTypeValue) {
+				toSearch();
+			}
+		}
+
 		var refreshUrl = function (){
 			var accessUrl = $accessUrlInput.val();
 			if(accessUrl){
@@ -1376,31 +1433,28 @@ License: You must have a valid license purchased only from themeforest(the above
 				$obIframe.attr("src", accessUrl);
 			}
 		}
-		$accessUrlInput.on("keyup", function(){  
+		var toAccessInIcandy = function(){
+			
+		}
+		var toSearch = function (){
+			var inputContent = $accessUrlInput.val();
+			if(inputContent){
+				$obIframe.attr("src", "https://www.baidu.com/s?wd=" + inputContent);
+			}
+		}
+		$accessUrlInput.on("keyup", function(){
 			var keycode = (event.keyCode ? event.keyCode : event.which);
 			if(keycode == '13'){
 				$gotoAccessBtn.trigger("click");
 			}
 		});
 		$gotoAccessBtn.on("click", function(){
-			refreshUrl();
-		});
-		refreshUrl();
+			toOperation();
+		})
 
-		var $actionType = $("#actionType"), $actionTypeUlLi = $("#actionTypeUl > li");
-		$actionType.on("change", function(){
-			refreshUrl();
-		});
-		$actionTypeUlLi.on("click", function(){
-			var $this = $(this);
-			var tValule = $this.data("value");
-			var actionTypeValue = $actionType.data("value");
-			if(!(tValule == actionTypeValue)){
-				$actionType.data("value", tValule);
-				$actionType.find("span").text($this.find("a").text());
-				$actionType.trigger("change");
-			}
-		});
+		var actionTypeValue = $.cookie(top.conf.cookie_key.ob_cok_action_type);
+		var $currActionTypeUlLi = $actionTypeUlLi.filter("li[data-value=" + (actionTypeValue ? actionTypeValue : 1) + "]");
+		$currActionTypeUlLi.trigger("click");
 	});
 </script>
 <!-- END JAVASCRIPTS -->
