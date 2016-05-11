@@ -75,7 +75,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		<div class="top-address-bar">
 			<ul>
 				<li>
-					<span class="input-group input-group-sm" style="width: 300px;">
+					<span class="input-group input-group-sm address-input">
 						<span class="input-group-addon">地址:</span>
 						<input id="accessUrlInput" type="text" class="form-control" placeholder="URL" value="http://baidu.com">
 					</span>
@@ -83,13 +83,16 @@ License: You must have a valid license purchased only from themeforest(the above
 				<li>
 					<div class="btn-group btn-group-sm">
 							<button id="actionType" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true" data-value="1">
-								<span>访问</span> <i class="fa fa-angle-down"></i>
+								<span>直接访问</span> <i class="fa fa-angle-down"></i>
 							</button>
 							<ul id="actionTypeUl" class="dropdown-menu" role="menu" aria-labelledby="" style="min-width: 70px;">
 								<li data-value="1">
-									<a href="javascript: void(0);">访问</a>
+									<a href="javascript: void(0);">直接访问</a>
 								</li>
 								<li data-value="2">
+									<a href="javascript: void(0);">中转访问</a>
+								</li>
+								<li data-value="3">
 									<a href="javascript: void(0);">搜索</a>
 								</li>
 							</ul>
