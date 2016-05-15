@@ -1434,7 +1434,14 @@ License: You must have a valid license purchased only from themeforest(the above
 			}
 		}
 		var toAccessInIcandy = function(){
-			
+			var accessUrl = $accessUrlInput.val();
+			if(accessUrl){
+				if(accessUrl.indexOf("http://") < 0){
+					accessUrl = "http://" + accessUrl;
+					$accessUrlInput.val(accessUrl);
+				}
+				$obIframe.attr("src", "${ctx}/proxyAccess?link=" + accessUrl);
+			}
 		}
 		var toSearch = function (){
 			var inputContent = $accessUrlInput.val();
