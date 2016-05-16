@@ -3,6 +3,9 @@ package com.gc.sports.webclient;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,12 +19,15 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.client.LaxRedirectStrategy;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicHeader;
+import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,7 +58,6 @@ public class ProxyAccessWebclient {
 	}
 
 	private void init(){
-
 		/*
 		 * setSocketTimeout
 		 * setConnectTimeout
@@ -68,16 +73,30 @@ public class ProxyAccessWebclient {
 		//（目前只有一个路由，因此让他等于最大值）
 		conMgr.setDefaultMaxPerRoute(conMgr.getMaxTotal());
 
-		//另外设置http client的重试次数，默认是3次；当前是禁用掉（如果项目量不到，这个默认即可）
+		// 另外设置http client的重试次数，默认是3次；当前是禁用掉（如果项目量不到，这个默认即可）
 		DefaultHttpRequestRetryHandler retryHandler = new DefaultHttpRequestRetryHandler(REQUEST_RETRY, true);
 
-		//设置重定向策略  
+		// 设置重定向策略  
 		LaxRedirectStrategy redirectStrategy = new LaxRedirectStrategy();
+
+		// 自签名策略
+		SSLConnectionSocketFactory sslsf = null;
+		try {
+			final SSLContextBuilder sSLContextBuilder = new SSLContextBuilder();
+			sSLContextBuilder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
+			sslsf = new SSLConnectionSocketFactory(sSLContextBuilder.build());
+		} catch (NoSuchAlgorithmException e) {
+			LOGGER.error(e.getLocalizedMessage(), e);
+		} catch (KeyStoreException e) {
+			LOGGER.error(e.getLocalizedMessage(), e);
+		} catch (KeyManagementException e) {
+			LOGGER.error(e.getLocalizedMessage(), e);
+		}
 
 		// 创建HttpClientBuilder
 		// HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
 		// httpClient = httpClientBuilder.setDefaultRequestConfig(defaultRequestConfig).build();
-		httpClient = HttpClients.custom().setDefaultRequestConfig(defaultRequestConfig).setConnectionManager(conMgr).setRetryHandler(retryHandler).setRedirectStrategy(redirectStrategy).build();
+		httpClient = HttpClients.custom().setDefaultRequestConfig(defaultRequestConfig).setConnectionManager(conMgr).setRetryHandler(retryHandler).setRedirectStrategy(redirectStrategy).setSSLSocketFactory(sslsf).build();
 
 	}
 
