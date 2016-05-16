@@ -9,7 +9,7 @@ public class ProxyAccessServicee {
 	public String access(String link) {
 		// ProxyAccessWebclient proxyAccessWebclient = ProxyAccessWebclientPool.FOOTBALLWEBCLIENT_POOL.poll();
 		ProxyAccessWebclient proxyAccessWebclient = new ProxyAccessWebclient();
-		String content = proxyAccessWebclient.httpPost(null, link);
+		String content = proxyAccessWebclient.httpGet(null, link);
 		return content;
 	}
 

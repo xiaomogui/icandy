@@ -1426,7 +1426,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		var refreshUrl = function (){
 			var accessUrl = $accessUrlInput.val();
 			if(accessUrl){
-				if(accessUrl.indexOf("http://") < 0){
+				if(accessUrl.indexOf("http://") < 0 && accessUrl.indexOf("https://") < 0){
 					accessUrl = "http://" + accessUrl;
 					$accessUrlInput.val(accessUrl);
 				}
@@ -1436,7 +1436,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		var toAccessInIcandy = function(){
 			var accessUrl = $accessUrlInput.val();
 			if(accessUrl){
-				if(accessUrl.indexOf("http://") < 0){
+				if(accessUrl.indexOf("http://") < 0 && accessUrl.indexOf("https://") < 0){
 					accessUrl = "http://" + accessUrl;
 					$accessUrlInput.val(accessUrl);
 				}
