@@ -100,20 +100,27 @@ public class ProxyAccessWebclient {
 
 	}
 
-	public String httpGet(String host, String uri, List<NameValuePair> params){
+	public ProxyAccessWebclientResponse httpGet(String host, String uri, List<NameValuePair> params){
 		return httpGet(params, host + uri);
 	}
 
-	public String httpGet(String uri, List<NameValuePair> params){
+	public ProxyAccessWebclientResponse httpGet(String uri, List<NameValuePair> params){
 		return httpGet(params, host + uri);
 	}
 
-	public String httpGet(List<NameValuePair> params, String url){
+	public ProxyAccessWebclientResponse httpGet(List<NameValuePair> params, String url){
+		return httpGet(params, null, url);
+	}
+
+	public ProxyAccessWebclientResponse httpGet(List<NameValuePair> params, List<Header> headerList, String url){
 		HttpGet httpGet = new HttpGet(url);
 
-		List<Header> headerList = new ArrayList<Header>();
-		headerList.add(new BasicHeader("User-Agent", USER_AGENT));
-		headerList.add(new BasicHeader("Connection", "close")); // 短链接
+		if(headerList == null || headerList.size() < 0){
+			headerList = new ArrayList<Header>();
+			headerList.add(new BasicHeader("User-Agent", USER_AGENT));
+			headerList.add(new BasicHeader("Connection", "close")); // 短链接
+			// headerList.add(new BasicHeader("Cookie", "")); // 设置cookies
+		}
 		httpGet.setHeaders(headerList.toArray(new Header[]{}));
 
 		HttpEntity httpEntity = null;
@@ -132,9 +139,14 @@ public class ProxyAccessWebclient {
 			if(statusCode == 200){
 				httpEntity = httpResponse.getEntity();
 				if(httpEntity != null){
+					Header[] headers = httpResponse.getAllHeaders();
 					String content = EntityUtils.toString(httpEntity, "UTF-8");
 					LOGGER.info("html内容： " + content);
-					return content;
+
+					ProxyAccessWebclientResponse proxyAccessWebclientResponse = new ProxyAccessWebclientResponse();
+					proxyAccessWebclientResponse.setContent(content);
+					proxyAccessWebclientResponse.setHeaders(headers);
+					return proxyAccessWebclientResponse;
 				}
 			}
 		} catch (ClientProtocolException e) {
@@ -226,4 +238,20 @@ public class ProxyAccessWebclient {
 
 	}
 
+	public class ProxyAccessWebclientResponse {
+		private String content;
+		private Header[] headers;
+		public String getContent() {
+			return content;
+		}
+		public void setContent(String content) {
+			this.content = content;
+		}
+		public Header[] getHeaders() {
+			return headers;
+		}
+		public void setHeaders(Header[] headers) {
+			this.headers = headers;
+		}
+	}
 }
