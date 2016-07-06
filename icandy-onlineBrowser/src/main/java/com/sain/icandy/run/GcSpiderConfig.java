@@ -69,6 +69,7 @@ public class GcSpiderConfig extends JFinalConfig {
 	@Override
 	public void configPlugin(Plugins plugins) {
 
+		/*
 		// 配置druid连接池
 		DruidPlugin druidDefault = new DruidPlugin(PropKit.get("jdbcUrl"), PropKit.get("user"), PropKit.get("password").trim(), PropKit.get("driver"));
 		// StatFilter提供JDBC层的统计信息
@@ -96,6 +97,7 @@ public class GcSpiderConfig extends JFinalConfig {
 		_MappingKit.mapping(arp);
 		arp.setShowSql(PropKit.getBoolean("db.show.sql", false));// 这句话就是ShowSql
 		plugins.add(arp);
+		*/
 
 		plugins.add(new EhCachePlugin());
 
